@@ -1,13 +1,11 @@
+use strict;                     # redundant, but quiets perlcritic
 package Method::Generate::Constructor::Role::StrictConstructor;
-
+$Method::Generate::Constructor::Role::StrictConstructor::VERSION = '0.007';
 # ABSTRACT: a role to make Moo constructors strict.
 
 
 use Moo::Role;
 use B ();
-{
-  $Method::Generate::Constructor::Role::StrictConstructor::VERSION = '0.006';
-}
 
 #
 # The gist of this code was copied directly from Dave Rolsky's (DROLSKY)
@@ -21,18 +19,20 @@ around _assign_new => sub {
     my $self = shift;
     my $spec = $_[0];
 
-    my @attrs = map { B::perlstring($_) . ' => 1,' }
+    my @attrs = map { B::perlstring($_) . ' => undef,' }
         grep {defined}
         map  { $_->{init_arg} }    ## no critic (ProhibitAccessOfPrivateData)
         values(%$spec);
 
+    my $state = ($] >= 5.010) ? "use feature 'state'; state" : "my";
+
     my $body .= <<"EOF";
 
     # MooX::StrictConstructor
-    my \%attrs = (@attrs);
-    my \@bad = sort grep { ! \$attrs{\$_} }  keys \%{ \$args };
+    $state \$attrs = { @attrs };
+    my \@bad = sort grep { ! exists \$attrs->{\$_} }  keys \%{ \$args };
     if (\@bad) {
-       die("Found unknown attribute(s) passed to the constructor: " .
+       Carp::confess("Found unknown attribute(s) passed to the constructor: " .
            join ", ", \@bad);
     }
 
@@ -56,7 +56,7 @@ Method::Generate::Constructor::Role::StrictConstructor - a role to make Moo cons
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 DESCRIPTION
 
@@ -89,7 +89,7 @@ George Hartzell <hartzell@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by George Hartzell.
+This software is copyright (c) 2015 by George Hartzell.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

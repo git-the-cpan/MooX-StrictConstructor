@@ -1,19 +1,18 @@
+use strict;                     # redundant, but quiets perlcritic
 package MooX::StrictConstructor;
-
+$MooX::StrictConstructor::VERSION = '0.007';
 # ABSTRACT: Make your Moo-based object constructors blow up on unknown attributes.
 
 
-use strictures 1;
-
 use Moo 1.001000 ();    # $Moo::MAKERS support
 use Moo::Role ();
+
 use Class::Method::Modifiers qw(install_modifier);
+
+use strictures 1;
 
 use constant
     CON_ROLE => 'Method::Generate::Constructor::Role::StrictConstructor';
-{
-  $MooX::StrictConstructor::VERSION = '0.006';
-}
 
 #
 # The gist of this code was copied directly from Graham Knop (HAARG)'s
@@ -54,14 +53,14 @@ MooX::StrictConstructor - Make your Moo-based object constructors blow up on unk
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
     package My::Class;
 
     use Moo;
-    use Moo::StrictConstructor;
+    use MooX::StrictConstructor;
 
     has 'size' => ( is => 'rw');
 
@@ -142,7 +141,7 @@ George Hartzell <hartzell@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by George Hartzell.
+This software is copyright (c) 2015 by George Hartzell.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
