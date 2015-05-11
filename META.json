@@ -4,7 +4,7 @@
       "George Hartzell <hartzell@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.036, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "Dist::Zilla version 5.034, CPAN::Meta::Converter version 2.150001",
    "license" : [
       "perl_5"
    ],
@@ -83,11 +83,11 @@
    "provides" : {
       "Method::Generate::Constructor::Role::StrictConstructor" : {
          "file" : "lib/Method/Generate/Constructor/Role/StrictConstructor.pm",
-         "version" : "0.007"
+         "version" : "0.008"
       },
       "MooX::StrictConstructor" : {
          "file" : "lib/MooX/StrictConstructor.pm",
-         "version" : "0.007"
+         "version" : "0.008"
       }
    },
    "release_status" : "stable",
@@ -102,6 +102,6 @@
          "web" : "https://github.com/hartzell/moox-strictconstructor"
       }
    },
-   "version" : "0.007"
+   "version" : "0.008"
 }
 

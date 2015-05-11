@@ -1,6 +1,6 @@
 use strict;                     # redundant, but quiets perlcritic
 package MooX::StrictConstructor;
-$MooX::StrictConstructor::VERSION = '0.007';
+$MooX::StrictConstructor::VERSION = '0.008';
 # ABSTRACT: Make your Moo-based object constructors blow up on unknown attributes.
 
 
@@ -53,7 +53,7 @@ MooX::StrictConstructor - Make your Moo-based object constructors blow up on unk
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
@@ -101,25 +101,35 @@ exception.  Useful?  Only you can tell.
 Because C<BUILD> methods are run after an object has been constructed and this
 code runs before the object is constructed the C<BUILD> trick will not work.
 
-=head1 BUGS
+=head1 BUGS/ODDITIES
 
-=over 4
-
-=item Inheritance
+=head2 Inheritance
 
 A class that uses L<MooX::StrictConstructor> but extends another class that
 does not will not be handled properly.  This code hooks into the constructor
 as it is being strung up (literally) and that happens in the parent class,
 not the one using strict.
 
-=item Subverting strictness
+A class that inherits from a L<Moose> based class will discover that the
+L<Moose> class's attributes are disallowed.  Given sufficient L<Moose> meta
+knowledge it might be possible to work around this.  I'd appreciate pull
+requests and or an outline of a solution.
+
+=head2 Subverting strictness
 
 L<MooseX::StrictConstructor> documents a trick
 for subverting strictness using BUILD.  This does not work here because
 strictness is enforced in the early stage of object construction but the
 BUILD subs are run after the objects has been built.
 
-=back
+=head2 Interactions with namespace::clean
+
+L<MooX::StrictConstructor> creates a C<new> method that L<namespace::clean>
+will over-zealously clean.  Workarounds include using
+L<MooX::StrictConstructor> B<after> L<namespace::autoclean> or telling
+L<namespace::clean> to ignore C<new> with something like:
+
+  use namespace::clean -except => ['new','meta'];
 
 =head1 SEE ALSO
 

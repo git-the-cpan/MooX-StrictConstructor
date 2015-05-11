@@ -1,6 +1,6 @@
 use strict;                     # redundant, but quiets perlcritic
 package Method::Generate::Constructor::Role::StrictConstructor;
-$Method::Generate::Constructor::Role::StrictConstructor::VERSION = '0.007';
+$Method::Generate::Constructor::Role::StrictConstructor::VERSION = '0.008';
 # ABSTRACT: a role to make Moo constructors strict.
 
 
@@ -56,7 +56,7 @@ Method::Generate::Constructor::Role::StrictConstructor - a role to make Moo cons
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 DESCRIPTION
 
